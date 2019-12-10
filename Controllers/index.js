@@ -1,12 +1,15 @@
 const authService = require('../Services/AuthService');
+const generateTokenService = require('../Services/generateTokenService');
 
 async function verifyPinGenerateToken(req, res) {
     let pin = req.body.pin;
     // validate
     let verification = await authService.verifyPin(pin);
-    console.log(verification);
+    if (verification) {
+        let token = await generateTokenService.generateToken();
+    }
     return res.send(verification);
-    // generate token (if verified pin)
+
     // return token
 }
 
