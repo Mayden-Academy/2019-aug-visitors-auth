@@ -1,16 +1,16 @@
 const authService = require('../Services/AuthService');
-const generateTokenService = require('../Services/generateTokenService');
+const TokenService = require('../Services/TokenService');
 
 async function verifyPinGenerateToken(req, res) {
     let pin = req.body.pin;
     // validate
     let verification = await authService.verifyPin(pin);
     if (verification) {
-        let token = await generateTokenService.generateToken();
+        let token = TokenService.generateToken();
+        res.json({'success': true, 'data': token, 'msg': 'pass code verified'});
+    } else {
+        res.json({'success': false, 'data': '', 'msg': 'pass code error'});
     }
-    return res.send(verification);
-
-    // return token
 }
 
 module.exports.verifyPinGenerateToken = verifyPinGenerateToken;
