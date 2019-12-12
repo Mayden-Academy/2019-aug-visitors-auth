@@ -4,8 +4,11 @@ const Validate = require('../Services/ValidationService');
 
 async function verifyPinGenerateToken(req, res) {
     let responseData = {'success': false, 'data': '', 'msg': 'pin error - not 4 digits'};
+
     let pin = req.body.pin;
+
     let validatePin = await Validate.validatePin(pin);
+
     if (validatePin) {
         try {
             responseData.success = await authService.verifyPin(pin);
